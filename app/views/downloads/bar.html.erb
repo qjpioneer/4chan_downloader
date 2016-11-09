@@ -1,0 +1,21 @@
+<section id="skills">
+					<progress value="80" max="100"></progress><span>JavaScript/jQuery</span>
+					<progress value="70" max="100"></progress><span>HTML5/CSS3</span>
+					<progress value="60" max="100"></progress><span>NodeJS</span>
+					<progress value="70" max="100"></progress><span>Java/PHP</span>
+					<progress value="60" max="100"></progress><span>MySQL</span>
+					<progress value="80" max="100"></progress><span>Photoshop</span>
+					</section>
+
+
+
+
+
+<script>
+$(function() {
+  $('progress').each(function() {
+    var max = $(this).val();
+    $(this).val(0).animate({ value: max }, { duration: 2000, easing: 'easeOutCirc' });
+			});
+});
+</script>

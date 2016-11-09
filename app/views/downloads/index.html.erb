@@ -1,0 +1,95 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<p id="notice"><%= notice %></p>
+
+<h1 class="col-sm-offset-4">4chan Downloader</h1>
+
+<!--  form with bootstrap  -->
+<%= form_tag(downloads_path, method: "get",class:'form-horizontal') do %>
+  <div class="form-group">
+
+      <%= label_tag(:q,"Input 4chan thread link",class:'col-sm-2 control-label') %>
+      <div class="col-sm-8">
+          <%= text_field_tag(:q,'', placeholder: 'http://boards.4chan.org/***/thread/****',class:'form-control',type:'url') %><br> 
+      </div>
+
+      <div class="col-sm-2">
+        <%= label_tag(:spec,"show imgs?") %>
+        <%= check_box_tag(:spec) %>
+      </div>
+
+lkdsfjlskdjf<%= params[:spec] %>
+
+
+
+      <div class="col-sm-offset-2">
+          <button type="submit" class="btn btn-default btn-primary ">Scan</button>
+
+          <% unless @b.blank? %>
+          <h3>Your link:  <%=link_to params[:q],params[:q],target:'blank'%> </h3><br>
+          <% end %>       
+      </div>
+
+  </div>
+<% end %><br><br>
+
+<% unless @b.blank? %>
+
+
+  <!-- img -->
+  <% zz=@img.first.attr('src')[2..-1] %><br>
+  <%= link_to (image_tag "http://"+zz, class: 'image'), params[:q],target:'blank' %>
+
+
+  <h3><%= "#{@title[1]} - #{@title[2]}"%></h3>
+  <h4>There are totally  <span class="hhh"><%= @b.css(".fileText a").length %></span>  files below...</h4>
+<% end %>
+
+
+
+
+  <% if params[:q] =~/^http/%>
+      <% @b.css(".fileText a").each do |p,index|  %>
+          <% key=p.child.to_s.gsub(/[^a-zA-Z.\d_-]/,'') #將檔名過濾，僅a-z,A-Z,.,0-9,_,- 存成檔名 %>
+          <% value=p.attr("href")[2..-1] #取自串第2+1字元到最後一個字元 %>
+
+          <% @z[key]=value  %>
+          
+      <%end%>
+  <%end%>
+
+<% @qq=[]%>
+<% @img.each do |o| %>
+  <%  image_tag ("http://"+o.attr('src')[2..-1]) %><br>
+  
+  <% end %>
+ 
+
+
+
+  <!-- file links -->
+  <div class="col-sm-offset-1">
+    <% if params[:q] =~/^http/%>
+        <% @z.each do |key,value| %>
+            <% "#{key}    ,  #{value}" %><br>
+
+            <!-- img -->
+            <% if params[:spec]=="1"%>
+              <% if value.include? ".webm" %>
+                  <%= image_tag ("http://"+value[0..-6]+"s.jpg") %>
+                <% else %>
+                  <%= image_tag ("http://"+value[0..-5]+"s.jpg") %>
+              <%end %>
+            <% end %>
+
+
+
+            <%= link_to key,"http://"+value  ,target:"_blank"%><br>
+        <% end %>
+    <%end %>
+  </div>
+
+  
+
+
+
