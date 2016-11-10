@@ -10,15 +10,16 @@
 
       <%= label_tag(:q,"Input 4chan thread link",class:'col-sm-2 control-label') %>
       <div class="col-sm-8">
-          <%= text_field_tag(:q,'', placeholder: 'http://boards.4chan.org/***/thread/****',class:'form-control',type:'url') %><br> 
+        <!--input value = :q ,default input value =last input =params[:q] ,input hint =placeholder:-->
+          <%= text_field_tag(:q,params[:q], placeholder: 'http://boards.4chan.org/***/thread/****',class:'form-control',type:'url',onClick:"this.select();") %><br> 
       </div>
 
       <div class="col-sm-2">
         <%= label_tag(:spec,"show imgs?") %>
-        <%= check_box_tag(:spec) %>
+        <%= check_box_tag(:spec,1,true) %>
       </div>
 
-
+      <input onClick="this.select();" value="Sample Text" />
 
       <div class="col-sm-offset-2">
           <button type="submit" class="btn btn-default btn-primary ">Scan</button>
